@@ -6,8 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class SQLiteDatabase {
     private static final String DB_URL = "jdbc:sqlite:budgettracker.db";
@@ -232,5 +231,81 @@ public class SQLiteDatabase {
             e.printStackTrace();
             return false;
         }
+    }
+
+
+    // Add these methods to SQLiteDatabase.java
+    public static Map<String, Double> getMonthlyNetTotals() {
+        Map<String, Double> monthlyNet = new LinkedHashMap<>();
+        String query = "SELECT strftime('%Y-%m', date) as month, " +
+                "SUM(CASE WHEN type = 'income' THEN amount ELSE -amount END) as net " +
+                "FROM transactions " +
+                "GROUP BY month " +
+                "ORDER BY month DESC";
+
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                monthlyNet.put(rs.getString("month"), rs.getDouble("net"));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error getting monthly net totals: " + e.getMessage());
+        }
+        return monthlyNet;
+    }
+
+    public static
+    Map<String, Double> getCategoryTotals(boolean isIncome) {
+        Map<String, Double> categoryTotals = new HashMap<>();
+        String type = isIncome ? "income" : "expense";
+        String query = "SELECT category, SUM(amount) as total " +
+                "FROM transactions " +
+                "WHERE type = ? " +
+                "GROUP BY category";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, type);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    categoryTotals.put(rs.getString("category"), rs.getDouble("total"));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error getting category totals: " + e.getMessage());
+        }
+        return categoryTotals;
+    }
+
+    public static List<Transaction> getRecentTransactions(int limit) {
+        List<Transaction> transactions = new ArrayList<>();
+        String query = "SELECT category, amount, date, type FROM transactions " +
+                "ORDER BY date DESC LIMIT ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, limit);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    String category = rs.getString("category");
+                    double amount = rs.getDouble("amount");
+                    String date = rs.getString("date");
+                    String type = rs.getString("type");
+
+                    if ("expense".equals(type)) {
+                        amount = -amount;
+                    }
+
+                    transactions.add(new Transaction(category, amount, date));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error getting recent transactions: " + e.getMessage());
+        }
+        return transactions;
     }
 }

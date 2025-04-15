@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import javafx.scene.Parent;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class StatisticsController {
 
@@ -33,7 +34,47 @@ public class StatisticsController {
     @FXML private Button HomeButton;
     @FXML private Button StatisticsButton;
     @FXML private Button HistoryButton;
+    public void initialize() {
+        loadMonthlyNetSpend();
+        loadCategoryPieCharts();
+    }
+    private void loadMonthlyNetSpend() {
+        Map<String, Double> monthlyNet = SQLiteDatabase.getMonthlyNetTotals();
+        StringBuilder netText = new StringBuilder();
 
+        monthlyNet.forEach((month, amount) -> {
+            String formattedAmount = String.format("%.2f€", amount);
+            netText.append(month).append(": ")
+                    .append(amount >= 0 ? "+" : "")
+                    .append(formattedAmount).append("\n");
+        });
+
+        netSpendLabel.setText(netText.toString());
+    }
+
+    private void loadCategoryPieCharts() {
+        // Income pie chart
+        Map<String, Double> incomeCategories = SQLiteDatabase.getCategoryTotals(true);
+        incomePieChart.getData().clear();
+        incomeCategories.forEach((category, amount) -> {
+            incomePieChart.getData().add(new PieChart.Data(
+                    category + " (" + String.format("%.2f€", amount) + ")",
+                    amount
+            ));
+        });
+        incomePieChart.setTitle("Income Breakdown");
+
+        // Expense pie chart
+        Map<String, Double> expenseCategories = SQLiteDatabase.getCategoryTotals(false);
+        expensePieChart.getData().clear();
+        expenseCategories.forEach((category, amount) -> {
+            expensePieChart.getData().add(new PieChart.Data(
+                    category + " (" + String.format("%.2f€", amount) + ")",
+                    amount
+            ));
+        });
+        expensePieChart.setTitle("Expense Breakdown");
+    }
     // Handle click on Home Button to go back to the Home view
     @FXML
     public void handleHomeButtonClick() {
@@ -69,6 +110,17 @@ public class StatisticsController {
             Button statisticsHomeButton = (Button) statisticsScene.lookup("#HomeButton"); // This should be the Home button in the Statistics view
             statisticsHomeButton.setDisable(false);
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    private void handleHistoryButtonClick() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/history-view.fxml"));
+            Scene historyScene = new Scene(loader.load());
+            Stage stage = (Stage) HistoryButton.getScene().getWindow();
+            stage.setScene(historyScene);
         } catch (IOException e) {
             e.printStackTrace();
         }

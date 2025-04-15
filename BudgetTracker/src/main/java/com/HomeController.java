@@ -133,9 +133,21 @@ public class HomeController {
         balance.setText(String.format("%.2f €", currentBalance));
     }
 
+    // In HomeController.java, modify the loadRecentTransactions method:
     public void loadRecentTransactions() {
-        List<Transaction> transactionList = SQLiteDatabase.getAllTransactions();
-        ObservableList<Transaction> observableTransactions = FXCollections.observableArrayList(transactionList);
+        List<Transaction> recentTransactions = SQLiteDatabase.getRecentTransactions(5);
+        ObservableList<Transaction> observableTransactions = FXCollections.observableArrayList(recentTransactions);
         recentTable.setItems(observableTransactions);
+    }
+    @FXML
+    private void handleHistoryButtonClick() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/history-view.fxml"));
+            Scene historyScene = new Scene(loader.load());
+            Stage stage = (Stage) HistoryButton.getScene().getWindow();
+            stage.setScene(historyScene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
