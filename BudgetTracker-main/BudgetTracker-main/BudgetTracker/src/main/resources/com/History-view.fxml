@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="807.0" prefWidth="1509.0" style="-fx-background-color: linear-gradient(to bottom, #1e3c72, #000000);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.HistoryController">
+
+    <VBox layoutX="404.0" layoutY="143.0" prefHeight="650.0" prefWidth="701.0" spacing="20.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="404.0" AnchorPane.rightAnchor="404.0" AnchorPane.topAnchor="143.0">
+        <LineChart fx:id="balanceTrendChart" animated="false" prefHeight="243.0" prefWidth="749.0" title="Balance Trend">
+            <xAxis>
+                <CategoryAxis label="Date" tickLabelFill="WHITE" />
+
+            </xAxis>
+            <yAxis>
+                <NumberAxis label="Balance (€)" tickLabelFill="WHITE" />
+            </yAxis>
+        </LineChart>
+   
+        <TableView fx:id="allTransactionsTable" prefHeight="402.0" prefWidth="711.0">
+            <columns>
+                <TableColumn fx:id="dateColumn" prefWidth="200.0" text="Date" />
+                <TableColumn fx:id="categoryColumn" prefWidth="300.0" text="Category" />
+                <TableColumn fx:id="amountColumn" prefWidth="200.0" text="Amount (€)" />
+            </columns>
+        </TableView>
+    </VBox>
+   <Button fx:id="StatisticsButton" layoutX="723.0" layoutY="60.0" mnemonicParsing="false" onAction="#handleStatisticsButtonClick" text="Statistics" />
+   <Button fx:id="HomeButton" layoutX="577.0" layoutY="60.0" mnemonicParsing="false" onAction="#handleHomeButtonClick" text="Home" />
+   <Button disable="true" layoutX="881.0" layoutY="60.0" mnemonicParsing="false" text="History" />
+</AnchorPane>
