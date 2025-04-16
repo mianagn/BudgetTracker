@@ -37,6 +37,7 @@ public class StatisticsController {
     public void initialize() {
         loadMonthlyNetSpend();
         loadCategoryPieCharts();
+        DateTimeUpdater.start(dateTime);
     }
     private void loadMonthlyNetSpend() {
         Map<String, Double> monthlyNet = SQLiteDatabase.getMonthlyNetTotals();

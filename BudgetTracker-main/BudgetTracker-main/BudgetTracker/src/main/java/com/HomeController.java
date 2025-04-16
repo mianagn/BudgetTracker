@@ -1,5 +1,6 @@
 package com;
 
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -48,11 +49,7 @@ public class HomeController {
     @FXML
     public void initialize() {
         instance = this;
-
-        // Set up current date and time
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        dateTime.setText(LocalDate.now().format(formatter));
-
+        DateTimeUpdater.start(dateTime);
         // Set up table columns
         descriptionCol.setCellValueFactory(new PropertyValueFactory<>("category"));
         amountCol.setCellValueFactory(new PropertyValueFactory<>("amount"));

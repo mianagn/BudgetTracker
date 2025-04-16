@@ -4,15 +4,17 @@
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="807.0" prefWidth="1509.0" style="-fx-background-color: linear-gradient(to bottom, #1e3c72, #000000);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.HistoryController">
+<AnchorPane prefHeight="922.0" prefWidth="1358.0" style="-fx-background-color: linear-gradient(to bottom, #1e3c72, #000000);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.HistoryController">
 
-    <VBox layoutX="404.0" layoutY="143.0" prefHeight="650.0" prefWidth="701.0" spacing="20.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="404.0" AnchorPane.rightAnchor="404.0" AnchorPane.topAnchor="143.0">
-        <LineChart fx:id="balanceTrendChart" animated="false" prefHeight="243.0" prefWidth="749.0" title="Balance Trend">
+    <VBox layoutX="242.0" layoutY="143.0" prefHeight="765.0" prefWidth="874.0" spacing="20.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="242.0" AnchorPane.rightAnchor="242.0" AnchorPane.topAnchor="143.0">
+        <LineChart fx:id="balanceTrendChart" animated="false" prefHeight="357.0" prefWidth="874.0" title="Balance Trend">
             <xAxis>
                 <CategoryAxis label="Date" tickLabelFill="WHITE" />
 
@@ -24,13 +26,27 @@
    
         <TableView fx:id="allTransactionsTable" prefHeight="402.0" prefWidth="711.0">
             <columns>
-                <TableColumn fx:id="dateColumn" prefWidth="200.0" text="Date" />
-                <TableColumn fx:id="categoryColumn" prefWidth="300.0" text="Category" />
-                <TableColumn fx:id="amountColumn" prefWidth="200.0" text="Amount (€)" />
+                <TableColumn fx:id="dateColumn" prefWidth="250.0" text="Date" />
+                <TableColumn fx:id="categoryColumn" prefWidth="350.0" text="Category" />
+                <TableColumn fx:id="amountColumn" prefWidth="272.0" text="Amount (€)" />
             </columns>
         </TableView>
     </VBox>
-   <Button fx:id="StatisticsButton" layoutX="723.0" layoutY="60.0" mnemonicParsing="false" onAction="#handleStatisticsButtonClick" text="Statistics" />
-   <Button fx:id="HomeButton" layoutX="577.0" layoutY="60.0" mnemonicParsing="false" onAction="#handleHomeButtonClick" text="Home" />
-   <Button disable="true" layoutX="881.0" layoutY="60.0" mnemonicParsing="false" text="History" />
+   <Button fx:id="StatisticsButton" layoutX="624.0" layoutY="92.0" mnemonicParsing="false" onAction="#handleStatisticsButtonClick" style="-fx-background-color: grey; -fx-background-radius: 14;" text="Statistics">
+      <font>
+         <Font name="System Bold" size="20.0" />
+      </font></Button>
+   <Button fx:id="HomeButton" layoutX="476.0" layoutY="92.0" mnemonicParsing="false" onAction="#handleHomeButtonClick" style="-fx-background-color: grey; -fx-background-radius: 14;" text="Home">
+      <font>
+         <Font name="System Bold" size="20.0" />
+      </font></Button>
+   <Button disable="true" layoutX="788.0" layoutY="92.0" mnemonicParsing="false" style="-fx-background-color: grey; -fx-background-radius: 14;" text="History">
+      <font>
+         <Font name="System Bold" size="20.0" />
+      </font></Button>
+   <Label fx:id="dateTime" alignment="CENTER" contentDisplay="CENTER" layoutX="1183.0" layoutY="14.0" prefHeight="32.0" prefWidth="161.0" style="-fx-background-color: black; -fx-background-radius: 30;" text="Date - time " textFill="#f5f5f5">
+      <font>
+         <Font size="22.0" />
+      </font>
+   </Label>
 </AnchorPane>
