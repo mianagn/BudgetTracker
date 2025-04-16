@@ -17,22 +17,16 @@ public class Transaction {
     }
 
     // Category property
-    public StringProperty categoryProperty() {
-        return category;
-    }
+
 
     public String getCategory() {
         return category.get();
     }
 
-    public void setCategory(String category) {
-        this.category.set(category);
-    }
+
 
     // Amount property
-    public DoubleProperty amountProperty() {
-        return amount;
-    }
+
 
     public double getAmount() {
         return amount.get();
@@ -43,9 +37,7 @@ public class Transaction {
     }
 
     // Date property
-    public StringProperty dateProperty() {
-        return date;
-    }
+
 
     public String getDate() {
         return date.get();

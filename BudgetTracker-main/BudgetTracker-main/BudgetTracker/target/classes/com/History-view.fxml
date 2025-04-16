@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="922.0" prefWidth="1358.0" style="-fx-background-color: linear-gradient(to bottom, #1e3c72, #000000);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.HistoryController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="922.0" prefWidth="1358.0" style="-fx-background-color: linear-gradient(to bottom, #1e3c72, #000000);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.HistoryController">
 
     <VBox layoutX="242.0" layoutY="143.0" prefHeight="765.0" prefWidth="874.0" spacing="20.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="242.0" AnchorPane.rightAnchor="242.0" AnchorPane.topAnchor="143.0">
         <LineChart fx:id="balanceTrendChart" animated="false" prefHeight="357.0" prefWidth="874.0" title="Balance Trend">
@@ -44,7 +44,7 @@
       <font>
          <Font name="System Bold" size="20.0" />
       </font></Button>
-   <Label fx:id="dateTime" alignment="CENTER" contentDisplay="CENTER" layoutX="1183.0" layoutY="14.0" prefHeight="32.0" prefWidth="161.0" style="-fx-background-color: black; -fx-background-radius: 30;" text="Date - time " textFill="#f5f5f5">
+   <Label fx:id="dateTime" alignment="CENTER" contentDisplay="CENTER" layoutX="1087.0" layoutY="14.0" prefHeight="40.0" prefWidth="248.0" style="-fx-background-color: black; -fx-background-radius: 30;" text="Date - time " textFill="#f5f5f5">
       <font>
          <Font size="22.0" />
       </font>

@@ -1,6 +1,6 @@
 package com;
 
-import javafx.animation.Timeline;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,9 +18,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 import java.util.List;
 
 public class HomeController {
@@ -41,8 +39,6 @@ public class HomeController {
     @FXML private TableColumn<Transaction, Double> amountCol;
     @FXML private TableColumn<Transaction, String> dateCol;
 
-    @FXML private Button incomeButton;
-    @FXML private Button expenseButton;
 
     private static HomeController instance;
 
@@ -58,6 +54,7 @@ public class HomeController {
         // Load initial data
         updateBalanceLabel();
         loadRecentTransactions();
+        styleTransactionTable();
     }
 
     // Make it accessible from other controllers
@@ -74,7 +71,43 @@ public class HomeController {
     private void handleExpenseButtonClick() {
         openTransactionWindow("Expense");
     }
+    private void styleTransactionTable() {
+        // Apply CSS styling to the table
+        String tableStyle =
+                "-fx-background-color: rgba(255, 255, 255, 0.1);" +  // Semi-transparent background
+                        "-fx-text-fill: white;" +                            // Text color
+                        "-fx-font-size: 14px;";                              // Font size
 
+        String headerStyle =
+                "-fx-background-color: rgba(0, 0, 0, 0.5);" +        // Darker header background
+                        "-fx-text-fill: white;" +                            // Header text color
+                        "-fx-font-weight: bold;";                            // Bold headers
+
+        String cellStyle =
+                "-fx-text-fill: white;";                             // Cell text color
+
+        // Apply styles
+        recentTable.setStyle(tableStyle);
+
+        // Style column headers
+        for (TableColumn<?, ?> column : recentTable.getColumns()) {
+            column.setStyle(headerStyle);
+        }
+
+        // Apply cell styling (this requires a CSS file)
+        // Create a file called styles.css in your resources folder with the content from the CSS artifact below
+        Scene scene = recentTable.getScene();
+        if (scene != null) {
+            scene.getStylesheets().add(getClass().getResource("/com/styles.css").toExternalForm());
+        } else {
+            // If the table is not yet in a scene, we need to wait
+            recentTable.sceneProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue != null) {
+                    newValue.getStylesheets().add(getClass().getResource("/com/styles.css").toExternalForm());
+                }
+            });
+        }
+    }
     private void openTransactionWindow(String transactionType) {
         try {
             FXMLLoader loader;
@@ -119,11 +152,7 @@ public class HomeController {
         }
     }
 
-    @FXML
-    private void handleHomeButtonClick() {
-        // Since we're already on the home screen, no need to navigate
-        // This is here for consistency with the navigation pattern
-    }
+
 
     public void updateBalanceLabel() {
         double currentBalance = SQLiteDatabase.getCurrentBalance();
