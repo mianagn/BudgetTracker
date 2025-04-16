@@ -14,8 +14,8 @@ public class Main extends Application {
         SQLiteDatabase.initializeDatabase();
 
         // Then load UI
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Home-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1400, 922);
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("login-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 600, 600);
         stage.setTitle("BudgetTracker");
         stage.setScene(scene);
         stage.show();

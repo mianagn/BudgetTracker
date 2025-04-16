@@ -17,7 +17,7 @@
          <ImageView fx:id="profilePic" fitHeight="225.0" fitWidth="238.0" layoutX="567.0" layoutY="151.0" pickOnBounds="true" preserveRatio="true">
             <Image url="@profile.png" />
          </ImageView>
-         <Text fx:id="welcome" fill="WHITE" layoutX="530.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" Welcome , Michael !" wrappingWidth="328.576171875">
+         <Text fx:id="welcome" fill="WHITE" layoutX="530.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="  Welcome Nikos !" wrappingWidth="328.576171875">
             <font>
                <Font size="34.0" />
             </font>

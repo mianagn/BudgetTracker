@@ -124,13 +124,14 @@ public class SQLiteDatabase {
     // Get all transactions
     public static List<Transaction> getAllTransactions() {
         List<Transaction> transactions = new ArrayList<>();
-        String query = "SELECT category, amount, date, type FROM transactions ORDER BY date DESC";
+        String query = "SELECT id, category, amount, date, type FROM transactions ORDER BY date DESC";
 
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
+                int id = rs.getInt("id");
                 String category = rs.getString("category");
                 double amount = rs.getDouble("amount");
                 String date = rs.getString("date");
@@ -141,7 +142,7 @@ public class SQLiteDatabase {
                     amount = -amount;
                 }
 
-                transactions.add(new Transaction(category, amount, date));
+                transactions.add(new Transaction(id, category, amount, date));
             }
         } catch (SQLException e) {
             System.err.println("Error getting transactions: " + e.getMessage());
@@ -183,55 +184,55 @@ public class SQLiteDatabase {
 //        return transactions;
 //    }
 //
-//     //Delete a transaction by ID (useful for future functionality)
-//    public static boolean deleteTransaction(int id) {
-//        // First get the transaction details to adjust the balance
-//        String getQuery = "SELECT amount, type FROM transactions WHERE id = ?";
-//        String deleteQuery = "DELETE FROM transactions WHERE id = ?";
-//
-//        try (Connection conn = getConnection()) {
-//            // Begin transaction
-//            conn.setAutoCommit(false);
-//
-//            // Get transaction details
-//            try (PreparedStatement getStmt = conn.prepareStatement(getQuery)) {
-//                getStmt.setInt(1, id);
-//
-//                try (ResultSet rs = getStmt.executeQuery()) {
-//                    if (rs.next()) {
-//                        double amount = rs.getDouble("amount");
-//                        boolean isIncome = "income".equals(rs.getString("type"));
-//
-//                        // Delete the transaction
-//                        try (PreparedStatement deleteStmt = conn.prepareStatement(deleteQuery)) {
-//                            deleteStmt.setInt(1, id);
-//                            deleteStmt.executeUpdate();
-//
-//                            // Adjust the balance (reverse the original transaction effect)
-//                            double currentBalance = getCurrentBalance();
-//                            double newBalance = isIncome ?
-//                                    currentBalance - amount : // Subtract if was income
-//                                    currentBalance + amount;  // Add back if was expense
-//
-//                            // Update the balance
-//                            try (PreparedStatement updateStmt = conn.prepareStatement("UPDATE balance SET balance = ? WHERE id = 1")) {
-//                                updateStmt.setDouble(1, newBalance);
-//                                updateStmt.executeUpdate();
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//
-//            // Commit transaction
-//            conn.commit();
-//            return true;
-//        } catch (SQLException e) {
-//            System.err.println("Error deleting transaction: " + e.getMessage());
-//            e.printStackTrace();
-//            return false;
-//        }
-//    }
+     //Delete a transaction by ID (useful for future functionality)
+    public static boolean deleteTransaction(int id) {
+        // First get the transaction details to adjust the balance
+        String getQuery = "SELECT amount, type FROM transactions WHERE id = ?";
+        String deleteQuery = "DELETE FROM transactions WHERE id = ?";
+
+        try (Connection conn = getConnection()) {
+            // Begin transaction
+            conn.setAutoCommit(false);
+
+            // Get transaction details
+            try (PreparedStatement getStmt = conn.prepareStatement(getQuery)) {
+                getStmt.setInt(1, id);
+
+                try (ResultSet rs = getStmt.executeQuery()) {
+                    if (rs.next()) {
+                        double amount = rs.getDouble("amount");
+                        boolean isIncome = "income".equals(rs.getString("type"));
+
+                        // Delete the transaction
+                        try (PreparedStatement deleteStmt = conn.prepareStatement(deleteQuery)) {
+                            deleteStmt.setInt(1, id);
+                            deleteStmt.executeUpdate();
+
+                            // Adjust the balance (reverse the original transaction effect)
+                            double currentBalance = getCurrentBalance();
+                            double newBalance = isIncome ?
+                                    currentBalance - amount : // Subtract if was income
+                                    currentBalance + amount;  // Add back if was expense
+
+                            // Update the balance
+                            try (PreparedStatement updateStmt = conn.prepareStatement("UPDATE balance SET balance = ? WHERE id = 1")) {
+                                updateStmt.setDouble(1, newBalance);
+                                updateStmt.executeUpdate();
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Commit transaction
+            conn.commit();
+            return true;
+        } catch (SQLException e) {
+            System.err.println("Error deleting transaction: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 
     // Add these methods to SQLiteDatabase.java
@@ -282,7 +283,7 @@ public class SQLiteDatabase {
 
     public static List<Transaction> getRecentTransactions(int limit) {
         List<Transaction> transactions = new ArrayList<>();
-        String query = "SELECT category, amount, date, type FROM transactions " +
+        String query = "SELECT id, category, amount, date, type FROM transactions " +
                 "ORDER BY date DESC LIMIT ?";
 
         try (Connection conn = getConnection();
@@ -291,6 +292,7 @@ public class SQLiteDatabase {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
+                    int id = rs.getInt("id");
                     String category = rs.getString("category");
                     double amount = rs.getDouble("amount");
                     String date = rs.getString("date");
@@ -300,7 +302,7 @@ public class SQLiteDatabase {
                         amount = -amount;
                     }
 
-                    transactions.add(new Transaction(category, amount, date));
+                    transactions.add(new Transaction(id, category, amount, date));
                 }
             }
         } catch (SQLException e) {

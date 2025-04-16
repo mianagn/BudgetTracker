@@ -1,58 +1,54 @@
 package com;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-
 public class Transaction {
-    private final StringProperty category;
-    private final DoubleProperty amount;
-    private final StringProperty date;
+    private int id;
+    private String category;
+    private double amount;
+    private String date;
 
-    public Transaction(String category, double amount, String date) {
-        this.category = new SimpleStringProperty(category);
-        this.amount = new SimpleDoubleProperty(amount);
-        this.date = new SimpleStringProperty(date);
+    public Transaction(int id, String category, double amount, String date) {
+        this.id = id;
+        this.category = category;
+        this.amount = amount;
+        this.date = date;
     }
 
-    // Category property
+    // Constructor without ID for backward compatibility
+    public Transaction(String category, double amount, String date) {
+        this.category = category;
+        this.amount = amount;
+        this.date = date;
+    }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getCategory() {
-        return category.get();
+        return category;
     }
 
-
-
-    // Amount property
-
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
     public double getAmount() {
-        return amount.get();
+        return amount;
     }
 
     public void setAmount(double amount) {
-        this.amount.set(amount);
+        this.amount = amount;
     }
 
-    // Date property
-
-
     public String getDate() {
-        return date.get();
+        return date;
     }
 
     public void setDate(String date) {
-        this.date.set(date);
-    }
-
-    @Override
-    public String toString() {
-        return "Transaction{" +
-                "category='" + getCategory() + '\'' +
-                ", amount=" + getAmount() +
-                ", date='" + getDate() + '\'' +
-                '}';
+        this.date = date;
     }
 }
