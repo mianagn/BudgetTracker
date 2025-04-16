@@ -1,4 +1,4 @@
-# JavaFX Expense Tracker App
+# JavaFX Budget Tracker App
 
 ## 🚀 Project Overview
 
