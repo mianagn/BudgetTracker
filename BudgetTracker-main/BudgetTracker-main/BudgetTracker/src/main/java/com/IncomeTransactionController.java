@@ -13,6 +13,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class IncomeTransactionController implements Initializable {
@@ -27,6 +28,7 @@ public class IncomeTransactionController implements Initializable {
         ObservableList<String> incomeCategories = FXCollections.observableArrayList(
                 "Salary", "Freelance", "Gift", "Investment", "Other"
         );
+        datePicker.setValue(LocalDate.now());
         incomeCategoryComboBox.setItems(incomeCategories);
     }
 

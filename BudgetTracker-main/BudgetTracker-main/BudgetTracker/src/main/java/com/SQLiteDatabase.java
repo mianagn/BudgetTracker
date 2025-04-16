@@ -114,7 +114,6 @@ public class SQLiteDatabase {
         }
     }
 
-    // Helper method to update balance based on transaction
     private static void updateBalanceForTransaction(double amount, boolean isIncome) {
         double currentBalance = getCurrentBalance();
         double newBalance = isIncome ? currentBalance + amount : currentBalance - amount;
@@ -137,7 +136,6 @@ public class SQLiteDatabase {
                 String date = rs.getString("date");
                 String type = rs.getString("type");
 
-                // For expense transactions, make amount negative for display
                 if ("expense".equals(type)) {
                     amount = -amount;
                 }
@@ -151,50 +149,12 @@ public class SQLiteDatabase {
 
         return transactions;
     }
-
-     //Optional: Method to get transactions by type (income or expense)
-//    public static List<Transaction> getTransactionsByType(boolean isIncome) {
-//        List<Transaction> transactions = new ArrayList<>();
-//        String type = isIncome ? "income" : "expense";
-//        String query = "SELECT category, amount, date FROM transactions WHERE type = ? ORDER BY date DESC";
-//
-//        try (Connection conn = getConnection();
-//             PreparedStatement stmt = conn.prepareStatement(query)) {
-//            stmt.setString(1, type);
-//
-//            try (ResultSet rs = stmt.executeQuery()) {
-//                while (rs.next()) {
-//                    String category = rs.getString("category");
-//                    double amount = rs.getDouble("amount");
-//                    String date = rs.getString("date");
-//
-//                    // For expense transactions, make amount negative for display
-//                    if (!isIncome) {
-//                        amount = -amount;
-//                    }
-//
-//                    transactions.add(new Transaction(category, amount, date));
-//                }
-//            }
-//        } catch (SQLException e) {
-//            System.err.println("Error getting transactions by type: " + e.getMessage());
-//            e.printStackTrace();
-//        }
-//
-//        return transactions;
-//    }
-//
-     //Delete a transaction by ID (useful for future functionality)
     public static boolean deleteTransaction(int id) {
-        // First get the transaction details to adjust the balance
         String getQuery = "SELECT amount, type FROM transactions WHERE id = ?";
         String deleteQuery = "DELETE FROM transactions WHERE id = ?";
 
         try (Connection conn = getConnection()) {
-            // Begin transaction
             conn.setAutoCommit(false);
-
-            // Get transaction details
             try (PreparedStatement getStmt = conn.prepareStatement(getQuery)) {
                 getStmt.setInt(1, id);
 
@@ -208,13 +168,10 @@ public class SQLiteDatabase {
                             deleteStmt.setInt(1, id);
                             deleteStmt.executeUpdate();
 
-                            // Adjust the balance (reverse the original transaction effect)
                             double currentBalance = getCurrentBalance();
                             double newBalance = isIncome ?
                                     currentBalance - amount : // Subtract if was income
                                     currentBalance + amount;  // Add back if was expense
-
-                            // Update the balance
                             try (PreparedStatement updateStmt = conn.prepareStatement("UPDATE balance SET balance = ? WHERE id = 1")) {
                                 updateStmt.setDouble(1, newBalance);
                                 updateStmt.executeUpdate();
@@ -226,6 +183,8 @@ public class SQLiteDatabase {
 
             // Commit transaction
             conn.commit();
+            updateBalance(getCurrentBalance());
+
             return true;
         } catch (SQLException e) {
             System.err.println("Error deleting transaction: " + e.getMessage());
@@ -235,7 +194,6 @@ public class SQLiteDatabase {
     }
 
 
-    // Add these methods to SQLiteDatabase.java
     public static Map<String, Double> getMonthlyNetTotals() {
         Map<String, Double> monthlyNet = new LinkedHashMap<>();
         String query = "SELECT strftime('%Y-%m', date) as month, " +
@@ -256,30 +214,6 @@ public class SQLiteDatabase {
         }
         return monthlyNet;
     }
-
-//    public static
-//    Map<String, Double> getCategoryTotals(boolean isIncome) {
-//        Map<String, Double> categoryTotals = new HashMap<>();
-//        String type = isIncome ? "income" : "expense";
-//        String query = "SELECT category, SUM(amount) as total " +
-//                "FROM transactions " +
-//                "WHERE type = ? " +
-//                "GROUP BY category";
-//
-//        try (Connection conn = getConnection();
-//             PreparedStatement stmt = conn.prepareStatement(query)) {
-//            stmt.setString(1, type);
-//
-//            try (ResultSet rs = stmt.executeQuery()) {
-//                while (rs.next()) {
-//                    categoryTotals.put(rs.getString("category"), rs.getDouble("total"));
-//                }
-//            }
-//        } catch (SQLException e) {
-//            System.err.println("Error getting category totals: " + e.getMessage());
-//        }
-//        return categoryTotals;
-//    }
 
     public static List<Transaction> getRecentTransactions(int limit) {
         List<Transaction> transactions = new ArrayList<>();
@@ -334,25 +268,4 @@ public class SQLiteDatabase {
         return categoryTotals;
     }
 
-//    public static double getNetTotalForMonth(String month) {
-//        double netTotal = 0.0;
-//        String query = "SELECT " +
-//                "SUM(CASE WHEN type = 'income' THEN amount ELSE -amount END) as net " +
-//                "FROM transactions " +
-//                "WHERE strftime('%Y-%m', date) = ?";
-//
-//        try (Connection conn = getConnection();
-//             PreparedStatement stmt = conn.prepareStatement(query)) {
-//            stmt.setString(1, month);
-//
-//            try (ResultSet rs = stmt.executeQuery()) {
-//                if (rs.next()) {
-//                    netTotal = rs.getDouble("net");
-//                }
-//            }
-//        } catch (SQLException e) {
-//            System.err.println("Error getting net total for month: " + e.getMessage());
-//        }
-//        return netTotal;
-//    }
 }

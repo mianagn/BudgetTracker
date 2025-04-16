@@ -131,23 +131,18 @@ public class HistoryController {
         series.setName("Balance Over Time");
 
         List<Transaction> transactions = SQLiteDatabase.getAllTransactions();
-        Map<String, Double> dailyBalances = new TreeMap<>();
         double runningBalance = 0;
 
-        // Process transactions in chronological order
-        for (Transaction t : transactions) {
+        // Use each transaction, not grouped by date
+        for (int i = 0; i < transactions.size(); i++) {
+            Transaction t = transactions.get(i);
             runningBalance += t.getAmount();
-            dailyBalances.put(t.getDate(), runningBalance);
+            String label = t.getDate() + " #" + (i + 1); // makes labels unique for same-day transactions
+            series.getData().add(new XYChart.Data<>(label, runningBalance));
         }
-
-        // Add data points to chart
-        dailyBalances.forEach((date, balance) -> {
-            series.getData().add(new XYChart.Data<>(date, balance));
-        });
 
         balanceTrendChart.getData().add(series);
     }
-
     @FXML
     private void handleStatisticsButtonClick() {
         try {

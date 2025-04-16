@@ -13,6 +13,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class ExpenseTransactionController implements Initializable {
@@ -28,6 +29,7 @@ public class ExpenseTransactionController implements Initializable {
                 "Transport", "Rent", "Entertainment", "Utilities", "Healthcare",
                 "Groceries", "Clothing", "Gas", "Dining", "Miscellaneous"
         );
+        datePicker.setValue(LocalDate.now());
         expenseCategoryComboBox.setItems(expenseCategories);
     }
 
