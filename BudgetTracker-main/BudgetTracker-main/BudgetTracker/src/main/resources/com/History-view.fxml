@@ -13,7 +13,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="922.0" prefWidth="1358.0" style="-fx-background-color: linear-gradient(to bottom, #1e3c72, #000000);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.HistoryController">
 
-    <VBox layoutX="229.0" layoutY="136.0" prefHeight="765.0" prefWidth="941.0" spacing="20.0" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="229.0" AnchorPane.rightAnchor="188.0" AnchorPane.topAnchor="136.0">
+    <VBox layoutX="209.0" layoutY="136.0" prefHeight="765.0" prefWidth="941.0" spacing="20.0" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="209.0" AnchorPane.rightAnchor="208.0" AnchorPane.topAnchor="136.0">
         <LineChart fx:id="balanceTrendChart" animated="false" prefHeight="357.0" prefWidth="874.0" title="Balance Trend">
             <xAxis>
                 <CategoryAxis label="Date" tickLabelFill="WHITE" />
@@ -23,7 +23,6 @@
                 <NumberAxis label="Balance (€)" tickLabelFill="WHITE" />
             </yAxis>
         </LineChart>
-   
         <TableView fx:id="allTransactionsTable" prefHeight="392.0" prefWidth="918.0">
             <columns>
                 <TableColumn fx:id="dateColumn" prefWidth="250.0" text="Date" />

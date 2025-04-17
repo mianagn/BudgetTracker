@@ -27,7 +27,7 @@ public class ExpenseTransactionController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         ObservableList<String> expenseCategories = FXCollections.observableArrayList(
                 "Transport", "Rent", "Entertainment", "Utilities", "Healthcare",
-                "Groceries", "Clothing", "Gas", "Dining", "Miscellaneous"
+                "Groceries", "Clothing", "Gas", "Taxes", "Miscellaneous"
         );
         datePicker.setValue(LocalDate.now());
         expenseCategoryComboBox.setItems(expenseCategories);
@@ -44,7 +44,7 @@ public class ExpenseTransactionController implements Initializable {
             double amountValue = Double.parseDouble(amountTextField.getText());
             String date = datePicker.getValue().toString();
 
-            // Insert expense transaction (false for expense)
+
             boolean success = SQLiteDatabase.insertTransaction(category, amountValue, date, false);
 
             if (success) {

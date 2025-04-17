@@ -13,7 +13,7 @@ public class Transaction {
         this.date = date;
     }
 
-    // Constructor without ID for backward compatibility
+
     public Transaction(String category, double amount, String date) {
         this.category = category;
         this.amount = amount;

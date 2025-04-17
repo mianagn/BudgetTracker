@@ -17,6 +17,8 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("login-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 600);
         stage.setTitle("BudgetTracker");
+        scene.getStylesheets().add(getClass().getResource("/com/styles.css").toExternalForm());
+
         stage.setScene(scene);
         stage.show();
     }

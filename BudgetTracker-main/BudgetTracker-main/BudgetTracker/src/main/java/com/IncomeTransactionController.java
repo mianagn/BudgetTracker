@@ -43,11 +43,9 @@ public class IncomeTransactionController implements Initializable {
             double amountValue = Double.parseDouble(amountTextField.getText());
             String date = datePicker.getValue().toString();
 
-            // Insert income transaction (true for income)
             boolean success = SQLiteDatabase.insertTransaction(category, amountValue, date, true);
 
             if (success) {
-                // Close the window after submission
                 Stage stage = (Stage) submitButton.getScene().getWindow();
                 stage.close();
             } else {

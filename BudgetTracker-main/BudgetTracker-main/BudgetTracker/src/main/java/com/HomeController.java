@@ -50,14 +50,13 @@ public class HomeController {
         descriptionCol.setCellValueFactory(new PropertyValueFactory<>("category"));
         amountCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
         dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
-
         // Load initial data
         updateBalanceLabel();
         loadRecentTransactions();
         styleTransactionTable();
     }
 
-    // Make it accessible from other controllers
+
     public static HomeController getInstance() {
         return instance;
     }
@@ -74,33 +73,31 @@ public class HomeController {
     private void styleTransactionTable() {
         // Apply CSS styling to the table
         String tableStyle =
-                "-fx-background-color: rgba(255, 255, 255, 0.1);" +  // Semi-transparent background
-                        "-fx-text-fill: white;" +                            // Text color
-                        "-fx-font-size: 14px;";                              // Font size
+                "-fx-background-color: rgba(255, 255, 255, 0.1);" +
+                        "-fx-text-fill: white;" +
+                        "-fx-font-size: 14px;";
 
         String headerStyle =
-                "-fx-background-color: rgba(0, 0, 0, 0.5);" +        // Darker header background
-                        "-fx-text-fill: white;" +                            // Header text color
-                        "-fx-font-weight: bold;";                            // Bold headers
+                "-fx-background-color: rgba(0, 0, 0, 0.5);" +
+                        "-fx-text-fill: white;" +
+                        "-fx-font-weight: bold;";
 
         String cellStyle =
-                "-fx-text-fill: white;";                             // Cell text color
+                "-fx-text-fill: white;";
 
         // Apply styles
         recentTable.setStyle(tableStyle);
 
-        // Style column headers
+
         for (TableColumn<?, ?> column : recentTable.getColumns()) {
             column.setStyle(headerStyle);
         }
 
-        // Apply cell styling (this requires a CSS file)
-        // Create a file called styles.css in your resources folder with the content from the CSS artifact below
         Scene scene = recentTable.getScene();
         if (scene != null) {
             scene.getStylesheets().add(getClass().getResource("/com/styles.css").toExternalForm());
         } else {
-            // If the table is not yet in a scene, we need to wait
+
             recentTable.sceneProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue != null) {
                     newValue.getStylesheets().add(getClass().getResource("/com/styles.css").toExternalForm());
@@ -123,10 +120,10 @@ public class HomeController {
             transactionStage.setTitle(transactionType + " Transaction");
             transactionStage.setScene(scene);
 
-            // Set modality to block input to other windows
+
             transactionStage.initModality(Modality.APPLICATION_MODAL);
 
-            // When transaction window is closed, refresh table and balance
+
             transactionStage.setOnHidden(e -> {
                 loadRecentTransactions();
                 updateBalanceLabel();
@@ -159,7 +156,7 @@ public class HomeController {
         balance.setText(String.format("%.2f €", currentBalance));
     }
 
-    // In HomeController.java, modify the loadRecentTransactions method:
+
     public void loadRecentTransactions() {
         List<Transaction> recentTransactions = SQLiteDatabase.getRecentTransactions(5);
         ObservableList<Transaction> observableTransactions = FXCollections.observableArrayList(recentTransactions);

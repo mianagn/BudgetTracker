@@ -35,7 +35,7 @@ public class StatisticsController {
     @FXML private Button StatisticsButton;
     @FXML private Button HistoryButton;
 
-    // For month navigation
+
     private List<String> availableMonths = new ArrayList<>();
     private int currentMonthIndex = 0;
 
@@ -49,14 +49,14 @@ public class StatisticsController {
     }
 
     private void loadAvailableMonths() {
-        // Get all months with transactions
+
         Map<String, Double> monthlyNet = SQLiteDatabase.getMonthlyNetTotals();
         availableMonths = new ArrayList<>(monthlyNet.keySet());
 
-        // Sort months in descending order (newest first)
+
         availableMonths.sort((m1, m2) -> m2.compareTo(m1));
 
-        // Set current index to the newest month (first in the list)
+
         currentMonthIndex = 0;
     }
     private void setPieChartLabelTextColor(PieChart chart, String color) {
@@ -76,17 +76,17 @@ public class StatisticsController {
             return;
         }
 
-        // Get current month
+
         String currentMonth = availableMonths.get(currentMonthIndex);
 
-        // Format month for display (YYYY-MM to Month YYYY)
+
         YearMonth ym = YearMonth.parse(currentMonth);
         String formattedMonth = ym.format(DateTimeFormatter.ofPattern("MMMM yyyy"));
         currentMonthLabel.setText(formattedMonth);
 
-        // Enable/disable navigation buttons
-        prevMonthButton.setDisable(currentMonthIndex >= availableMonths.size() - 1); // Disable if at oldest month
-        nextMonthButton.setDisable(currentMonthIndex <= 0); // Disable if at newest month
+
+        prevMonthButton.setDisable(currentMonthIndex >= availableMonths.size() - 1);
+        nextMonthButton.setDisable(currentMonthIndex <= 0);
     }
 
     @FXML
@@ -150,7 +150,7 @@ public class StatisticsController {
 
         }
 
-        // Expense pie chart
+
         Map<String, Double> expenseCategories = SQLiteDatabase.getCategoryTotalsForMonth(false, month);
         expensePieChart.getData().clear();
         if (!expenseCategories.isEmpty()) {
@@ -180,15 +180,15 @@ public class StatisticsController {
         expensePieChart.lookupAll(".chart-title").forEach(node -> node.setStyle("-fx-text-fill: white;"));
     }
 
-    // Handle click on Home Button to go back to the Home view
+
     @FXML
     public void handleHomeButtonClick() {
         try {
-            // Load Home view
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Home-view.fxml"));
             Parent homeView = loader.load();
 
-            // Get the current stage and set the new scene
+
             Stage stage = (Stage) HomeButton.getScene().getWindow();
             stage.setScene(new Scene(homeView));
 
@@ -197,19 +197,19 @@ public class StatisticsController {
         }
     }
 
-    // Navigate to the Statistics screen
+
     @FXML
     private void handleStatisticsButtonClick() {
         try {
-            // Load and display the statistics screen
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/statistics-view.fxml"));
             Scene statisticsScene = new Scene(loader.load());
 
-            // Set up the statistics window
+
             Stage stage = (Stage) StatisticsButton.getScene().getWindow();
             stage.setScene(statisticsScene);
 
-            // Enable Home button on the Statistics screen
+
             Button statisticsHomeButton = (Button) statisticsScene.lookup("#HomeButton");
             statisticsHomeButton.setDisable(false);
 

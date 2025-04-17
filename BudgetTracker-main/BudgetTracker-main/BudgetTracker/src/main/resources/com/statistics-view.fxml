@@ -36,8 +36,8 @@
     <center>
         <Pane fx:id="midContainer" prefHeight="400.0" prefWidth="1358.0" BorderPane.alignment="CENTER">
             <!-- Month Navigation -->
-            <HBox alignment="CENTER" layoutX="514.0" layoutY="30.0" prefHeight="50.0" prefWidth="330.0" spacing="15.0">
-                <Button fx:id="prevMonthButton" mnemonicParsing="false" onAction="#handlePrevMonthClick" style="-fx-background-radius: 50;" text="&lt;">
+            <HBox alignment="CENTER" layoutX="507.0" layoutY="30.0" prefHeight="50.0" prefWidth="330.0" spacing="15.0">
+                <Button fx:id="prevMonthButton" mnemonicParsing="false" onAction="#handlePrevMonthClick" style="-fx-background-radius: 50; -fx-background-color: white;" text="&lt;-">
                     <font>
                         <Font name="System Bold" size="16.0" />
                     </font>
@@ -47,7 +47,7 @@
                         <Font name="System Bold" size="18.0" />
                     </font>
                 </Label>
-                <Button fx:id="nextMonthButton" mnemonicParsing="false" onAction="#handleNextMonthClick" style="-fx-background-radius: 50;" text="&gt;">
+                <Button fx:id="nextMonthButton" mnemonicParsing="false" onAction="#handleNextMonthClick" style="-fx-background-radius: 50; -fx-background-color: white;" text="-&gt;">
                     <font>
                         <Font name="System Bold" size="16.0" />
                     </font>
@@ -55,12 +55,12 @@
             </HBox>
 
             <!-- Net Spend -->
-            <Label fx:id="netSpendLabel" alignment="CENTER" layoutX="514.0" layoutY="80.0" prefHeight="50.0" prefWidth="330.0" text="€0.00" textFill="WHITE">
+            <Label fx:id="netSpendLabel" alignment="CENTER" layoutX="507.0" layoutY="80.0" prefHeight="50.0" prefWidth="330.0" text="€0.00" textFill="WHITE">
                 <font>
                     <Font name="System Bold" size="28.0" />
                 </font>
             </Label>
-            <Label fx:id="netSpendText" alignment="CENTER" contentDisplay="CENTER" layoutX="560.0" layoutY="130.0" prefHeight="30.0" prefWidth="239.0" text="Net Spend" textAlignment="CENTER" textFill="#ddd0d0">
+            <Label fx:id="netSpendText" alignment="CENTER" contentDisplay="CENTER" layoutX="553.0" layoutY="130.0" prefHeight="30.0" prefWidth="246.0" text="Net Spend" textAlignment="CENTER" textFill="#ddd0d0">
                 <font>
                     <Font size="20.0" />
                 </font>

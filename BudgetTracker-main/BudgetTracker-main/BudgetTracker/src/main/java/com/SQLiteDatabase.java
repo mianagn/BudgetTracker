@@ -61,7 +61,7 @@ public class SQLiteDatabase {
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, category);
-            stmt.setDouble(2, Math.abs(amount)); // Store positive values
+            stmt.setDouble(2, Math.abs(amount));
             stmt.setString(3, date);
             stmt.setString(4, type);
 

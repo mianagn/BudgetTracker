@@ -11,13 +11,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="922.0" prefWidth="1358.0" style="-fx-background-color: linear-gradient(to bottom, #1e3c72, #000000); -fx-background-radius: 0;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.HomeController">
+<BorderPane  maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="922.0" prefWidth="1358.0" style="-fx-background-color: linear-gradient(to bottom, #1e3c72, #000000); -fx-background-radius: 0;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.HomeController">
    <top>
       <Pane fx:id="headerContainer" prefHeight="390.0" prefWidth="1358.0" BorderPane.alignment="CENTER">
-         <ImageView fx:id="profilePic" fitHeight="225.0" fitWidth="238.0" layoutX="567.0" layoutY="151.0" pickOnBounds="true" preserveRatio="true">
+         <ImageView fx:id="profilePic" fitHeight="225.0" fitWidth="234.0" layoutX="566.0" layoutY="151.0" pickOnBounds="true" preserveRatio="true">
             <Image url="@profile.png" />
          </ImageView>
-         <Text fx:id="welcome" fill="WHITE" layoutX="530.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="  Welcome Nikos !" wrappingWidth="328.576171875">
+         <Text fx:id="welcome" fill="WHITE" layoutX="547.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" Welcome Nikos !" wrappingWidth="263.576171875">
             <font>
                <Font size="34.0" />
             </font>
@@ -73,7 +73,7 @@
                <TableColumn fx:id="dateCol" prefWidth="123.0" text="Date" />
             </columns>
          </TableView>
-         <Text fill="WHITE" layoutX="480.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last transactions :">
+         <Text fill="WHITE" layoutX="469.0" layoutY="241.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last transactions :">
             <font>
                <Font size="20.0" />
             </font>
