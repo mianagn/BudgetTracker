@@ -75,7 +75,7 @@ public class StatisticsController {
 
     private void updateMonthNavigationControls() {
         if (availableMonths.isEmpty()) {
-            currentMonthLabel.setText("No Data");
+
             netSpendLabel.setText("€0.00");
             prevMonthButton.setDisable(true);
             nextMonthButton.setDisable(true);
