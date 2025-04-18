@@ -1,34 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 
-<AnchorPane prefHeight="260.0" prefWidth="293.0" style="-fx-background-color: linear-gradient(to bottom, #00ff00, #000000);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.IncomeTransactionController">
-    <ComboBox fx:id="incomeCategoryComboBox" layoutX="150.0" layoutY="52.0" prefHeight="25.0" prefWidth="123.0" />
-    <TextField fx:id="amountTextField" layoutX="150.0" layoutY="96.0" prefHeight="25.0" prefWidth="123.0" />
-    <DatePicker fx:id="datePicker" layoutX="150.0" layoutY="147.0" prefHeight="25.0" prefWidth="123.0" />
-    <Button fx:id="submitButton" layoutX="107.0" layoutY="195.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: green;" text="Submit" textFill="WHITE" onAction="#handleSubmit">
-      <font>
-         <Font size="17.0" />
-      </font></Button>
-   <Text fill="WHITE" layoutX="34.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Category">
-      <font>
-         <Font size="20.0" />
-      </font>
-   </Text>
-   <Text fill="WHITE" layoutX="38.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Amount">
-      <font>
-         <Font size="20.0" />
-      </font>
-   </Text>
-   <Text fill="WHITE" layoutX="47.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" wrappingWidth="54.0">
-      <font>
-         <Font size="20.0" />
-      </font>
-   </Text>
-</AnchorPane>
+<?import java.lang.String?>
+<BorderPane prefHeight="320.0" prefWidth="350.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.IncomeTransactionController">
+    <top>
+        <Label alignment="CENTER" styleClass="transaction-header" text="New Income" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets top="20.0" />
+            </BorderPane.margin>
+        </Label>
+    </top>
+
+    <center>
+        <VBox alignment="CENTER" spacing="20" styleClass="transaction-content">
+            <padding>
+                <Insets bottom="20.0" left="30.0" right="30.0" top="10.0" />
+            </padding>
+
+            <!-- Category Selection -->
+            <HBox alignment="CENTER_LEFT" spacing="15">
+                <Label styleClass="transaction-label" text="Category" HBox.hgrow="NEVER" />
+                <ComboBox fx:id="incomeCategoryComboBox" promptText="Select category" styleClass="transaction-input" HBox.hgrow="ALWAYS" />
+            </HBox>
+
+            <!-- Amount Input -->
+            <HBox alignment="CENTER_LEFT" spacing="15">
+                <Label styleClass="transaction-label" text="Amount" HBox.hgrow="NEVER" />
+                <TextField fx:id="amountTextField" promptText="0.00" styleClass="transaction-input" HBox.hgrow="ALWAYS" />
+            </HBox>
+
+            <!-- Date Selection -->
+            <HBox alignment="CENTER_LEFT" spacing="15">
+                <Label styleClass="transaction-label" text="Date" HBox.hgrow="NEVER" />
+                <DatePicker fx:id="datePicker" promptText="Select date" styleClass="transaction-input" HBox.hgrow="ALWAYS" />
+            </HBox>
+        </VBox>
+    </center>
+
+    <bottom>
+        <Button fx:id="submitButton" onAction="#handleSubmit" styleClass="income-submit-button" text="Submit" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets bottom="25.0" top="10.0" />
+            </BorderPane.margin>
+        </Button>
+    </bottom>
+
+    <styleClass>
+        <String fx:value="transaction-container" />
+        <String fx:value="income-container" />
+    </styleClass>
+</BorderPane>

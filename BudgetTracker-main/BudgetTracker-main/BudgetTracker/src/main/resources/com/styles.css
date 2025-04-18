@@ -1,76 +1,176 @@
-/* Table styling */
-.table-view {
-    -fx-background-color: rgba(0, 0, 30, 0.3);
-    -fx-background-radius: 5;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 10, 0, 0, 0);
+/* Global Styles */
+* {
+    -fx-font-family: 'Segoe UI', 'Arial', sans-serif;
 }
 
-.table-view .column-header {
-    -fx-background-color: #1e3c72;
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-    -fx-padding: 10 5 10 5;
+.root {
+    -fx-background-color: linear-gradient(to bottom right, #1a2a6c, #2d4686, #131836);
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
 }
-.table-view .column-header .label {
-    -fx-alignment: CENTER-LEFT;
+
+/* Common Components */
+.card {
+    -fx-background-color: rgba(255, 255, 255, 0.08);
+    -fx-background-radius: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 5);
+    -fx-padding: 15px;
+}
+
+/* Navigation Buttons */
+.nav-button {
+    -fx-background-color: rgba(255, 255, 255, 0.12);
+    -fx-background-radius: 30px;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: normal;
+    -fx-padding: 12px 24px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 1);
+}
+
+.nav-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+}
+
+.nav-button:pressed {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+}
+
+.nav-button:disabled {
+    -fx-background-color: rgba(100, 149, 237, 0.5);
+    -fx-text-fill: white;
+    -fx-opacity: 1.0;
+}
+
+/* Transaction Buttons */
+.income-button {
+    -fx-background-color: linear-gradient(to bottom right, #43a047, #2e7d32);
+    -fx-background-radius: 30px;
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-padding: 15px 30px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 3);
+}
+
+.income-button:hover {
+    -fx-background-color: linear-gradient(to bottom right, #4caf50, #388e3c);
+}
+
+.income-button:pressed {
+    -fx-background-color: linear-gradient(to bottom right, #388e3c, #2e7d32);
+}
+
+.expense-button {
+    -fx-background-color: linear-gradient(to bottom right, #e53935, #c62828);
+    -fx-background-radius: 30px;
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-padding: 15px 30px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 3);
+}
+
+.expense-button:hover {
+    -fx-background-color: linear-gradient(to bottom right, #f44336, #d32f2f);
+}
+
+.expense-button:pressed {
+    -fx-background-color: linear-gradient(to bottom right, #d32f2f, #c62828);
+}
+
+/* Table styling */
+.table-view {
+    -fx-background-color: rgba(255, 255, 255, 0.07);
+    -fx-background-radius: 12px;
+    -fx-padding: 0;
+    -fx-border-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 4);
 }
 
 .table-view .column-header-background {
-    -fx-background-color: transparent;
+    -fx-background-color: rgba(0, 0, 0, 0.2);
+    -fx-background-radius: 12px 12px 0 0;
+    -fx-padding: 5px 0 5px 0;
 }
 
-.table-view .column-header-background .filler {
+.table-view .column-header, .table-view .filler {
     -fx-background-color: transparent;
+    -fx-size: 45px;
+    -fx-border-color: transparent;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 10px 5px;
 }
 
 .table-view .table-cell {
     -fx-text-fill: white;
     -fx-alignment: center-left;
-    -fx-padding: 8 5 8 5;
+    -fx-padding: 12px 8px;
+    -fx-border-color: transparent;
+    -fx-font-size: 14px;
 }
 
 .table-row-cell {
-    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-background-color: rgba(255, 255, 255, 0.05);
     -fx-table-cell-border-color: transparent;
+    -fx-border-width: 0;
 }
 
 .table-row-cell:odd {
-    -fx-background-color: rgba(255, 255, 255, 0.05);
+    -fx-background-color: rgba(255, 255, 255, 0.02);
 }
 
 .table-row-cell:selected {
-    -fx-background-color: rgba(30, 60, 114, 0.8);
+    -fx-background-color: rgba(100, 149, 237, 0.3);
     -fx-text-background-color: white;
 }
 
-/* Line Chart styling */
-.chart-plot-background {
-    -fx-background-color: rgba(0, 0, 30, 0.2);
+.table-row-cell:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
 }
 
-.chart-vertical-grid-lines {
-    -fx-stroke: rgba(255, 255, 255, 0.1);
+/* Delete button in table */
+.delete-button {
+    -fx-background-color: rgba(211, 47, 47, 0.7);
+    -fx-background-radius: 50%;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 8px;
+    -fx-cursor: hand;
 }
 
-.chart-horizontal-grid-lines {
-    -fx-stroke: rgba(255, 255, 255, 0.1);
+.delete-button:hover {
+    -fx-background-color: rgba(211, 47, 47, 0.9);
 }
 
-.chart-series-line {
-    -fx-stroke-width: 2px;
+/* Charts styling */
+.chart {
+    -fx-padding: 10px;
+    -fx-background-color: transparent;
 }
 
-/* Add this to make the pie chart text more visible */
-.chart-pie-label {
-    -fx-fill: white;
+.chart-content {
+    -fx-padding: 15px;
 }
 
-.chart-pie-label-line {
-    -fx-stroke: white;
+.chart-title {
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
 }
 
 .chart-legend {
-    -fx-background-color: rgba(0, 0, 0, 0.5);
+    -fx-background-color: rgba(0, 0, 0, 0.3);
+    -fx-background-radius: 8px;
     -fx-padding: 10px;
 }
 
@@ -78,69 +178,381 @@
     -fx-text-fill: white;
 }
 
-
-/* Background of the entire Login screen */
-.login-background {
-    -fx-background-color: linear-gradient(to bottom, #1e3c72, #000000);
+.chart-plot-background {
+    -fx-background-color: rgba(255, 255, 255, 0.05);
+    -fx-background-radius: 8px;
 }
 
-/* Styling for the login title */
+.chart-vertical-grid-lines {
+    -fx-stroke: rgba(255, 255, 255, 0.08);
+    -fx-stroke-dash-array: 2 2;
+}
+
+.chart-horizontal-grid-lines {
+    -fx-stroke: rgba(255, 255, 255, 0.08);
+    -fx-stroke-dash-array: 2 2;
+}
+
+.chart-series-line {
+    -fx-stroke-width: 3px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 3, 0, 0, 1);
+}
+
+.default-color0.chart-series-line {
+    -fx-stroke: #64b5f6;
+}
+
+.default-color1.chart-series-line {
+    -fx-stroke: #81c784;
+}
+
+.chart-line-symbol {
+    -fx-background-color: white, white;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+}
+
+.default-color0.chart-line-symbol {
+    -fx-background-color: #64b5f6, white;
+}
+
+.default-color1.chart-line-symbol {
+    -fx-background-color: #81c784, white;
+}
+
+/* Pie chart styling */
+.chart-pie {
+    -fx-border-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 3);
+}
+
+.chart-pie-label {
+    -fx-fill: white;
+    -fx-font-size: 14px;
+}
+
+.chart-pie-label-line {
+    -fx-stroke: white;
+    -fx-stroke-width: 1.5px;
+}
+
+/* Axis styling for charts */
+.axis {
+    -fx-tick-label-fill: rgba(255, 255, 255, 0.8);
+    -fx-tick-length: 3;
+    -fx-minor-tick-length: 0;
+}
+
+.axis-label {
+    -fx-text-fill: rgba(255, 255, 255, 0.9);
+    -fx-font-size: 14px;
+}
+
+/* Login Screen Styling */
+.login-background {
+    -fx-background-color: linear-gradient(to bottom right, #1a2a6c, #2d4686, #131836);
+}
+
+.login-form {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-background-radius: 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 15, 0, 0, 8);
+    -fx-padding: 30px;
+}
+
 .login-title {
     -fx-text-fill: white;
-    -fx-font-size: 22px;
+    -fx-font-size: 28px;
     -fx-font-weight: bold;
-    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 5, 0, 0, 2);
 }
 
-/* Styling for the input fields (TextField and PasswordField) */
 .login-input {
-    -fx-background-color: white;
-    -fx-text-fill: black;
-    -fx-background-radius: 14;
-    -fx-pref-height: 31px;
-    -fx-pref-width: 280px;
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-background-radius: 30px;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: rgba(255, 255, 255, 0.6);
+    -fx-padding: 15px 20px;
     -fx-font-size: 16px;
+    -fx-effect: innershadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2);
 }
 
-/* Error label text styling */
-.error-label {
-    -fx-text-fill: red;
-    -fx-font-size: 14px;
-    -fx-alignment: center;
+.login-input:focused {
+    -fx-background-color: rgba(255, 255, 255, 0.25);
+    -fx-effect: innershadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 2);
 }
+
 .login-button {
-    -fx-background-color: blue;
+    -fx-background-color: linear-gradient(to bottom right, #4a78d1, #3867c2);
+    -fx-background-radius: 30px;
     -fx-text-fill: white;
-    -fx-background-radius: 25;
-    -fx-font-size: 15px;
+    -fx-font-size: 16px;
     -fx-font-weight: bold;
-    -fx-transition: all 0.3s ease;
+    -fx-padding: 15px 35px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 3);
 }
 
 .login-button:hover {
-    -fx-background-color: #3b78d2;
-    -fx-background-radius: 15;
+    -fx-background-color: linear-gradient(to bottom right, #5989e2, #4978d3);
 }
 
+.login-button:pressed {
+    -fx-background-color: linear-gradient(to bottom right, #3867c2, #2a5cb3);
+}
 
+.error-label {
+    -fx-text-fill: #ff6b6b;
+    -fx-font-size: 14px;
+    -fx-alignment: center;
+    -fx-padding: 5px 0;
+}
 
-.nav-button {
-    -fx-background-color: grey;
-    -fx-background-radius: 14;
+/* Date and Time Display */
+.date-time {
+    -fx-background-color: rgba(0, 0, 0, 0.3);
+    -fx-background-radius: 30px;
+    -fx-padding: 10px 20px;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0, 0, 2);
+}
+
+/* Balance Display */
+.balance-container {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-background-radius: 15px;
+    -fx-padding: 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 4);
+}
+
+.balance-amount {
+    -fx-text-fill: white;
+    -fx-font-size: 42px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 3, 0, 0, 1);
+}
+
+.balance-label {
+    -fx-text-fill: rgba(255, 255, 255, 0.7);
+    -fx-font-size: 16px;
+}
+
+/* Month Navigation in Statistics */
+.month-nav-button {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-background-radius: 50%;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 15px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 3, 0, 0, 1);
+}
+
+.month-nav-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.25);
+}
+
+.month-nav-button:pressed {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+}
+
+.month-label {
+    -fx-text-fill: white;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 3, 0, 0, 1);
+}
+
+/* Net Spend Display */
+.net-spend {
+    -fx-text-fill: white;
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 3, 0, 0, 1);
+}
+
+.net-spend-text {
+    -fx-text-fill: rgba(255, 255, 255, 0.7);
+    -fx-font-size: 18px;
+}
+
+/* Profile Section */
+.profile-image {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 5);
+    -fx-background-radius: 100%;
+}
+
+.welcome-text {
+    -fx-text-fill: white;
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 3, 0, 0, 1);
+}
+
+/* Section headers */
+.section-header {
+    -fx-text-fill: white;
     -fx-font-size: 20px;
     -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 3, 0, 0, 1);
 }
 
-.income-button {
-    -fx-background-color: green;
-    -fx-text-fill: white;
-    -fx-font-size: 32px;
-    -fx-background-radius: 14;
+/* Transaction Forms Styling */
+.transaction-container {
+    -fx-background-color: rgba(0, 0, 0, 0.85);
+    -fx-background-radius: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 15, 0, 0, 10);
+    -fx-border-radius: 15px;
 }
 
-.expense-button {
-    -fx-background-color: red;
+.expense-container {
+    -fx-border-color: linear-gradient(to bottom, rgba(229, 57, 53, 0.7), transparent);
+    -fx-border-width: 7px;
+    -fx-border-radius: 12px;
+}
+
+.income-container {
+    -fx-border-color: linear-gradient(to bottom, rgba(67, 160, 71, 0.7), transparent);
+    -fx-border-width: 7px;
+    -fx-border-radius: 12px;
+}
+
+.transaction-header {
     -fx-text-fill: white;
-    -fx-font-size: 32px;
-    -fx-background-radius: 14;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 5, 0, 0, 2);
+}
+
+.transaction-content {
+    -fx-padding: 20px;
+}
+
+.transaction-label {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-min-width: 80px;
+}
+
+.transaction-input {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-background-radius: 8px;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: rgba(255, 255, 255, 0.5);
+    -fx-padding: 8px 12px;
+    -fx-font-size: 14px;
+    -fx-effect: innershadow(gaussian, rgba(0, 0, 0, 0.2), 3, 0, 0, 1);
+    -fx-max-width: 1000;
+    -fx-pref-width: 200;
+}
+
+.transaction-input:focused {
+    -fx-background-color: rgba(255, 255, 255, 0.25);
+    -fx-effect: innershadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0, 0, 1);
+}
+
+/* Date picker styling */
+.date-picker {
+    -fx-background-color: transparent;
+}
+
+.date-picker .arrow-button {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-background-radius: 0 8px 8px 0;
+}
+
+.date-picker .arrow-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.3);
+}
+
+.date-picker .arrow-button .arrow {
+    -fx-background-color: white;
+}
+
+.date-picker .text-field {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-background-radius: 8px 0 0 8px;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: rgba(255, 255, 255, 0.5);
+}
+
+/* Submit buttons */
+.expense-submit-button {
+    -fx-background-color: linear-gradient(to bottom right, #e53935, #c62828);
+    -fx-background-radius: 30px;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 12px 40px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 3);
+}
+
+.expense-submit-button:hover {
+    -fx-background-color: linear-gradient(to bottom right, #f44336, #d32f2f);
+}
+
+.expense-submit-button:pressed {
+    -fx-background-color: linear-gradient(to bottom right, #d32f2f, #c62828);
+}
+
+.income-submit-button {
+    -fx-background-color: linear-gradient(to bottom right, #43a047, #2e7d32);
+    -fx-background-radius: 30px;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 12px 40px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 3);
+}
+
+.income-submit-button:hover {
+    -fx-background-color: linear-gradient(to bottom right, #4caf50, #388e3c);
+}
+
+.income-submit-button:pressed {
+    -fx-background-color: linear-gradient(to bottom right, #388e3c, #2e7d32);
+}
+
+/* ComboBox Styling */
+.combo-box {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-background-radius: 8px;
+    -fx-text-fill: white;
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+}
+
+.combo-box .arrow {
+    -fx-background-color: white;
+}
+
+.combo-box .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-padding: 8px 12px;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: rgba(30, 40, 60, 0.95);
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 5);
+}
+
+.combo-box-popup .list-view .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-padding: 8px 12px;
+}
+
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+}
+
+.combo-box-popup .list-view .list-cell:selected {
+    -fx-background-color: rgba(100, 149, 237, 0.3);
 }

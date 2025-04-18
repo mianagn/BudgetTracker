@@ -194,9 +194,6 @@ public class HistoryController {
                     confirmDialog.setHeaderText("Delete Transaction");
                     confirmDialog.setContentText("Are you sure you want to delete this transaction?");
 
-                    DialogPane dialogPane = confirmDialog.getDialogPane();
-                    dialogPane.getStylesheets().add(getClass().getResource("/com/styles.css").toExternalForm());
-
                     Optional<ButtonType> result = confirmDialog.showAndWait();
                     if (result.isPresent() && result.get() == ButtonType.OK) {
                         boolean success = SQLiteDatabase.deleteTransaction(transactionId);

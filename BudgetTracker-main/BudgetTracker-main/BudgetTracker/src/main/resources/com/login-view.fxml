@@ -9,37 +9,43 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane stylesheets="@styles.css" prefHeight="300" prefWidth="400" styleClass="login-background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.LoginController">
-    <VBox alignment="CENTER" layoutX="50" layoutY="60" prefHeight="300.0" prefWidth="400.0" spacing="10.0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
-        <Label alignment="CENTER" prefHeight="41.0" prefWidth="315.0" styleClass="login-title" text="Welcome to budget tracker">
+<AnchorPane stylesheets="@styles.css" prefHeight="500" prefWidth="800" styleClass="login-background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.LoginController">
+    <VBox alignment="CENTER" layoutX="50" layoutY="60" spacing="20.0" styleClass="login-form" AnchorPane.bottomAnchor="100" AnchorPane.leftAnchor="250" AnchorPane.rightAnchor="250" AnchorPane.topAnchor="100">
+        <Label alignment="CENTER" styleClass="login-title" text="Budget Tracker">
             <font>
-                <Font name="System Bold" size="16.0" />
+                <Font name="System Bold" size="28.0" />
             </font>
+            <VBox.margin>
+                <Insets bottom="20.0" />
+            </VBox.margin>
         </Label>
 
-        <TextField fx:id="usernameField" alignment="CENTER" maxHeight="355.0" maxWidth="280.0" minHeight="-Infinity" styleClass="login-input" promptText="Username">
+        <TextField fx:id="usernameField" alignment="CENTER" maxWidth="280.0" styleClass="login-input" promptText="Username">
             <font>
                 <Font size="16.0" />
             </font>
+            <VBox.margin>
+                <Insets top="10.0" />
+            </VBox.margin>
         </TextField>
 
-        <PasswordField fx:id="passwordField" alignment="CENTER" maxHeight="355.0" maxWidth="280.0" minHeight="-Infinity" styleClass="login-input" promptText="Password">
+        <PasswordField fx:id="passwordField" alignment="CENTER" maxWidth="280.0" styleClass="login-input" promptText="Password">
             <VBox.margin>
-                <Insets top="20.0" />
+                <Insets top="15.0" bottom="5.0" />
             </VBox.margin>
             <font>
                 <Font size="16.0" />
             </font>
         </PasswordField>
 
-        <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="153.0" styleClass="error-label" text="" />
+        <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" styleClass="error-label" text="" />
 
         <Button fx:id="loginButton" onAction="#handleLoginButton" styleClass="login-button" text="Login">
             <VBox.margin>
-                <Insets />
+                <Insets top="15.0" />
             </VBox.margin>
             <font>
-                <Font size="15.0" />
+                <Font size="16.0" />
             </font>
         </Button>
     </VBox>

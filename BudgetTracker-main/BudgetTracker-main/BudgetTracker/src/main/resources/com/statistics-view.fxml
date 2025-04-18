@@ -6,72 +6,69 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="historyContainer" prefHeight="922.0" prefWidth="1358.0" style="-fx-background-color: linear-gradient(to bottom, #1e3c72, #000000);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.StatisticsController">
+<BorderPane fx:id="historyContainer" prefHeight="922.0" prefWidth="1358.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.StatisticsController">
 
     <!-- Top Navigation -->
     <top>
-        <StackPane maxHeight="219.0" minHeight="50.0" prefHeight="67.0" prefWidth="1358.0" BorderPane.alignment="CENTER">
-            <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="54.0" prefWidth="1358.0" spacing="60.0" StackPane.alignment="CENTER">
-                <Button fx:id="HomeButton" alignment="CENTER" contentDisplay="CENTER" onAction="#handleHomeButtonClick" styleClass="nav-button" stylesheets="@styles.css" text="Home">
-                    <font><Font name="System Bold" size="20.0" /></font>
-                </Button>
-                <Button fx:id="StatisticsButton" alignment="CENTER" contentDisplay="CENTER" disable="true" onAction="#handleStatisticsButtonClick" prefHeight="44.0" prefWidth="111.0" styleClass="nav-button" stylesheets="@styles.css" text="Statistics">
-                    <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-                </Button>
-                <Button fx:id="HistoryButton" alignment="CENTER" contentDisplay="CENTER" onAction="#handleHistoryButtonClick" styleClass="nav-button" stylesheets="@styles.css" text="History">
-                    <font><Font name="System Bold" size="20.0" /></font>
-                </Button>
-            <StackPane.margin>
-               <Insets />
-            </StackPane.margin>
-            </HBox>
-        </StackPane>
+        <HBox alignment="CENTER" spacing="30.0" style="-fx-padding: 20px;">
+            <Button fx:id="HomeButton" onAction="#handleHomeButtonClick" styleClass="nav-button" text="Home" />
+            <Button fx:id="StatisticsButton" disable="true" onAction="#handleStatisticsButtonClick" styleClass="nav-button" text="Statistics" />
+            <Button fx:id="HistoryButton" onAction="#handleHistoryButtonClick" styleClass="nav-button" text="History" />
+        </HBox>
     </top>
 
     <!-- Main content center -->
     <center>
-        <VBox alignment="TOP_CENTER">
+        <VBox spacing="30">
+            <padding>
+                <Insets bottom="30.0" left="30.0" right="30.0" top="20.0" />
+            </padding>
 
-            <!-- Month navigation -->
-            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="1358.0" spacing="15">
-                <Button fx:id="prevMonthButton" onAction="#handlePrevMonthClick" style="-fx-background-radius: 50; -fx-background-color: white;" text="&lt;-">
-                    <font><Font name="System Bold" size="16.0" /></font>
-                </Button>
-                <Label fx:id="currentMonthLabel" text="Current Month" textFill="WHITE">
-                    <font><Font name="System Bold" size="18.0" /></font>
-                </Label>
-                <Button fx:id="nextMonthButton" alignment="CENTER" contentDisplay="CENTER" onAction="#handleNextMonthClick" style="-fx-background-radius: 50; -fx-background-color: white;" text="-&gt;">
-                    <font><Font name="System Bold" size="16.0" /></font>
-                </Button>
+            <!-- Month Navigation and Net Spend -->
+            <HBox alignment="CENTER" styleClass="card">
+                <VBox alignment="CENTER" fillWidth="false" prefHeight="62.0" prefWidth="530.0">
+                    <!-- Month navigation -->
+                    <HBox alignment="CENTER_RIGHT" maxWidth="-Infinity" prefHeight="62.0" prefWidth="554.0" spacing="20.0" VBox.vgrow="ALWAYS">
+                        <Button fx:id="prevMonthButton" onAction="#handlePrevMonthClick" styleClass="month-nav-button" text="&lt;" />
+                        <Label fx:id="currentMonthLabel" styleClass="month-label" text="Current Month">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Label>
+                        <Button fx:id="nextMonthButton" onAction="#handleNextMonthClick" styleClass="month-nav-button" text="&gt;" />
+                  <VBox.margin>
+                     <Insets />
+                  </VBox.margin>
+                    </HBox>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+                </VBox>
+
+                <!-- Net Spend Display -->
+                <VBox alignment="TOP_RIGHT" prefHeight="62.0" prefWidth="247.0">
+                    <Label fx:id="netSpendLabel" alignment="TOP_RIGHT" contentDisplay="RIGHT" prefHeight="39.0" prefWidth="275.0" styleClass="net-spend" text="€0.00" />
+                    <Label fx:id="netSpendText" alignment="TOP_RIGHT" prefHeight="23.0" prefWidth="268.0" styleClass="net-spend-text" text="Net Spend" />
+                </VBox>
+            <VBox.margin>
+               <Insets />
+            </VBox.margin>
             </HBox>
 
-            <!-- Net Spend Display -->
-            <VBox alignment="CENTER" prefHeight="70.0" prefWidth="1350.0">
-                <Label fx:id="netSpendLabel" alignment="CENTER" prefHeight="40.0" prefWidth="390.0" text="€0.00" textFill="WHITE">
-                    <font><Font name="System Bold" size="28.0" /></font>
-                </Label>
-                <Label fx:id="netSpendText" text="Net Spend" textAlignment="CENTER" textFill="#ddd0d0">
-                    <font>
-                  <Font size="20.0" />
-               </font>
-                </Label>
-            </VBox>
+            <!-- Charts -->
+            <HBox fx:id="chartContainer" spacing="30" VBox.vgrow="ALWAYS">
+                <!-- Expense Chart Card -->
+                <VBox alignment="CENTER" styleClass="card" HBox.hgrow="ALWAYS">
+                    <PieChart fx:id="expensePieChart" animated="false" legendVisible="true" title="Expense Breakdown" VBox.vgrow="ALWAYS" />
+                </VBox>
 
-            <!-- Pie Charts Responsive Container -->
-            <VBox fx:id="chartRow" alignment="CENTER" spacing="50">
-
-                <PieChart fx:id="expensePieChart" prefHeight="348.0" prefWidth="1358.0" style="-fx-background-color: transparent;" />
-                <PieChart fx:id="incomePieChart" prefHeight="350" prefWidth="500" style="-fx-background-color: transparent;" />
-            </VBox>
+                <!-- Income Chart Card -->
+                <VBox alignment="CENTER" styleClass="card" HBox.hgrow="ALWAYS">
+                    <PieChart fx:id="incomePieChart" animated="false" legendVisible="true" title="Income Breakdown" VBox.vgrow="ALWAYS" />
+                </VBox>
+            </HBox>
         </VBox>
     </center>
 </BorderPane>

@@ -29,7 +29,7 @@ public class StatisticsController {
     @FXML private Label currentMonthLabel;
     @FXML private Button prevMonthButton;
     @FXML private Button nextMonthButton;
-    @FXML private VBox chartRow;
+    @FXML private HBox chartContainer;
     @FXML private BorderPane historyContainer;
     @FXML private Button HomeButton;
     @FXML private Button StatisticsButton;
@@ -46,10 +46,10 @@ public class StatisticsController {
         loadDataForCurrentMonth();
         incomePieChart.lookupAll(".chart-title").forEach(node -> node.setStyle("-fx-text-fill: white;"));
         expensePieChart.lookupAll(".chart-title").forEach(node -> node.setStyle("-fx-text-fill: white;"));
-        chartRow.widthProperty().addListener((obs, oldVal, newVal) -> {
+        chartContainer.widthProperty().addListener((obs, oldVal, newVal) -> {
             if (incomePieChart != null && expensePieChart != null) {
-                incomePieChart.setPrefWidth(chartRow.getWidth());
-                expensePieChart.setPrefWidth(chartRow.getWidth());
+                incomePieChart.setPrefWidth(chartContainer.getWidth());
+                expensePieChart.setPrefWidth(chartContainer.getWidth());
             }
         });
     }
@@ -144,7 +144,7 @@ public class StatisticsController {
         // Force layout calculations on next pulse
         Platform.runLater(() -> {
             // Force layout calculation
-            chartRow.layout();
+            chartContainer.layout();
 
             // Schedule another layout update after a short delay
             new Thread(() -> {
@@ -152,7 +152,7 @@ public class StatisticsController {
                     Thread.sleep(100);
                     Platform.runLater(() -> {
                         // Get current window size
-                        Stage stage = (Stage) chartRow.getScene().getWindow();
+                        Stage stage = (Stage) chartContainer.getScene().getWindow();
                         double width = stage.getWidth();
                         double height = stage.getHeight();
 
@@ -221,17 +221,17 @@ public class StatisticsController {
 
         // Update the view
         Platform.runLater(() -> {
-            chartRow.getChildren().clear();
-            chartRow.getChildren().addAll(expensePieChart, incomePieChart);
+            chartContainer.getChildren().clear();
+            chartContainer.getChildren().addAll(expensePieChart, incomePieChart);
 
             // Force layout pass
-            chartRow.layout();
+            chartContainer.layout();
 
             // Schedule another layout pass after a short delay
             new Thread(() -> {
                 try {
                     Thread.sleep(50);
-                    Platform.runLater(() -> chartRow.layout());
+                    Platform.runLater(() -> chartContainer.layout());
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
