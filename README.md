@@ -36,4 +36,6 @@ A simple personal finance tracking app built with JavaFX built for a uni project
 - Styled buttons and text fields
 - Error handling for input validation
 
+The username and password are nikosadmin.
+
 
