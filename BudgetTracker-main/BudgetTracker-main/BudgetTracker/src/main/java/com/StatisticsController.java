@@ -1,17 +1,18 @@
 package com;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
-
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.time.YearMonth;
@@ -19,21 +20,21 @@ import java.time.format.DateTimeFormatter;
 
 public class StatisticsController {
 
-    public Pane headerContainer;
-    public Pane midContainer;
-    public PieChart incomePieChart;
-    public PieChart expensePieChart;
-    public Label netSpendLabel;
-
-    public Label netSpendText;
-    public Label dateTime;
-    public Label currentMonthLabel;
-    public Button prevMonthButton;
-    public Button nextMonthButton;
-
+    @FXML private Pane headerContainer;
+    @FXML private Pane midContainer;
+    @FXML private PieChart incomePieChart;
+    @FXML private PieChart expensePieChart;
+    @FXML private Label netSpendLabel;
+    @FXML private Label netSpendText;
+    @FXML private Label currentMonthLabel;
+    @FXML private Button prevMonthButton;
+    @FXML private Button nextMonthButton;
+    @FXML private VBox chartRow;
+    @FXML private BorderPane historyContainer;
     @FXML private Button HomeButton;
     @FXML private Button StatisticsButton;
     @FXML private Button HistoryButton;
+
 
 
     private List<String> availableMonths = new ArrayList<>();
@@ -43,9 +44,14 @@ public class StatisticsController {
         loadAvailableMonths();
         updateMonthNavigationControls();
         loadDataForCurrentMonth();
-        DateTimeUpdater.start(dateTime);
         incomePieChart.lookupAll(".chart-title").forEach(node -> node.setStyle("-fx-text-fill: white;"));
         expensePieChart.lookupAll(".chart-title").forEach(node -> node.setStyle("-fx-text-fill: white;"));
+        chartRow.widthProperty().addListener((obs, oldVal, newVal) -> {
+            if (incomePieChart != null && expensePieChart != null) {
+                incomePieChart.setPrefWidth(chartRow.getWidth());
+                expensePieChart.setPrefWidth(chartRow.getWidth());
+            }
+        });
     }
 
     private void loadAvailableMonths() {
@@ -54,7 +60,7 @@ public class StatisticsController {
         availableMonths = new ArrayList<>(monthlyNet.keySet());
 
 
-        availableMonths.sort((m1, m2) -> m2.compareTo(m1));
+        availableMonths.sort(Comparator.reverseOrder());
 
 
         currentMonthIndex = 0;
@@ -95,6 +101,7 @@ public class StatisticsController {
             currentMonthIndex++;
             updateMonthNavigationControls();
             loadDataForCurrentMonth();
+            refreshChartsAfterNavigation();
         }
     }
 
@@ -104,6 +111,8 @@ public class StatisticsController {
             currentMonthIndex--;
             updateMonthNavigationControls();
             loadDataForCurrentMonth();
+            refreshChartsAfterNavigation();
+
         }
     }
 
@@ -116,6 +125,7 @@ public class StatisticsController {
         String selectedMonth = availableMonths.get(currentMonthIndex);
         loadNetSpendForMonth(selectedMonth);
         loadCategoryPieChartsForMonth(selectedMonth);
+
     }
 
     private void loadNetSpendForMonth(String month) {
@@ -128,12 +138,55 @@ public class StatisticsController {
         } else {
             netSpendLabel.setText("€0.00");
         }
-    }
 
+    }
+    private void refreshChartsAfterNavigation() {
+        // Force layout calculations on next pulse
+        Platform.runLater(() -> {
+            // Force layout calculation
+            chartRow.layout();
+
+            // Schedule another layout update after a short delay
+            new Thread(() -> {
+                try {
+                    Thread.sleep(100);
+                    Platform.runLater(() -> {
+                        // Get current window size
+                        Stage stage = (Stage) chartRow.getScene().getWindow();
+                        double width = stage.getWidth();
+                        double height = stage.getHeight();
+
+                        // Force resize
+                        stage.setWidth(width + 1);
+                        stage.setHeight(height + 1);
+
+                        // Return to original size
+                        Platform.runLater(() -> {
+                            stage.setWidth(width);
+                            stage.setHeight(height);
+                        });
+                    });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+        });
+    }
     private void loadCategoryPieChartsForMonth(String month) {
-        // Income pie chart
+        // Create new chart instances every time
+        incomePieChart = new PieChart();
+        expensePieChart = new PieChart();
+
+        // Set styles and properties for the new charts
+        incomePieChart.setPrefHeight(350);
+        incomePieChart.setPrefWidth(500);
+        expensePieChart.setPrefHeight(348);
+        expensePieChart.setPrefWidth(1358);
+        incomePieChart.setStyle("-fx-background-color: transparent;");
+        expensePieChart.setStyle("-fx-background-color: transparent;");
+
+        // Load income data
         Map<String, Double> incomeCategories = SQLiteDatabase.getCategoryTotalsForMonth(true, month);
-        incomePieChart.getData().clear();
         if (!incomeCategories.isEmpty()) {
             incomeCategories.forEach((category, amount) -> {
                 incomePieChart.getData().add(new PieChart.Data(
@@ -142,17 +195,12 @@ public class StatisticsController {
                 ));
             });
             incomePieChart.setTitle("Income Breakdown");
-            incomePieChart.lookupAll(".chart-title").forEach(node -> node.setStyle("-fx-text-fill: white;"));
-            setPieChartLabelTextColor(incomePieChart, "white");
         } else {
             incomePieChart.setTitle("No Income Data");
-            expensePieChart.lookupAll(".chart-title").forEach(node -> node.setStyle("-fx-text-fill: white;"));
-
         }
 
-
+        // Load expense data
         Map<String, Double> expenseCategories = SQLiteDatabase.getCategoryTotalsForMonth(false, month);
-        expensePieChart.getData().clear();
         if (!expenseCategories.isEmpty()) {
             expenseCategories.forEach((category, amount) -> {
                 expensePieChart.getData().add(new PieChart.Data(
@@ -161,15 +209,35 @@ public class StatisticsController {
                 ));
             });
             expensePieChart.setTitle("Expense Breakdown");
-            incomePieChart.lookupAll(".chart-title").forEach(node -> node.setStyle("-fx-text-fill: white;"));
-            setPieChartLabelTextColor(expensePieChart, "white");
-
         } else {
             expensePieChart.setTitle("No Expense Data");
-            incomePieChart.lookupAll(".chart-title").forEach(node -> node.setStyle("-fx-text-fill: white;"));
         }
-    }
 
+        // Apply text styling
+        incomePieChart.lookupAll(".chart-title").forEach(node -> node.setStyle("-fx-text-fill: white;"));
+        expensePieChart.lookupAll(".chart-title").forEach(node -> node.setStyle("-fx-text-fill: white;"));
+        setPieChartLabelTextColor(incomePieChart, "white");
+        setPieChartLabelTextColor(expensePieChart, "white");
+
+        // Update the view
+        Platform.runLater(() -> {
+            chartRow.getChildren().clear();
+            chartRow.getChildren().addAll(expensePieChart, incomePieChart);
+
+            // Force layout pass
+            chartRow.layout();
+
+            // Schedule another layout pass after a short delay
+            new Thread(() -> {
+                try {
+                    Thread.sleep(50);
+                    Platform.runLater(() -> chartRow.layout());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+        });
+    }
     private void clearAllCharts() {
         incomePieChart.getData().clear();
         expensePieChart.getData().clear();
@@ -229,4 +297,8 @@ public class StatisticsController {
             e.printStackTrace();
         }
     }
+
+
+
+
 }

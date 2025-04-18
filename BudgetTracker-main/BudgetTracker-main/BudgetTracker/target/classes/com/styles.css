@@ -11,6 +11,9 @@
     -fx-font-weight: bold;
     -fx-padding: 10 5 10 5;
 }
+.table-view .column-header .label {
+    -fx-alignment: CENTER-LEFT;
+}
 
 .table-view .column-header-background {
     -fx-background-color: transparent;
@@ -117,4 +120,27 @@
 .login-button:hover {
     -fx-background-color: #3b78d2;
     -fx-background-radius: 15;
+}
+
+
+
+.nav-button {
+    -fx-background-color: grey;
+    -fx-background-radius: 14;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.income-button {
+    -fx-background-color: green;
+    -fx-text-fill: white;
+    -fx-font-size: 32px;
+    -fx-background-radius: 14;
+}
+
+.expense-button {
+    -fx-background-color: red;
+    -fx-text-fill: white;
+    -fx-font-size: 32px;
+    -fx-background-radius: 14;
 }

@@ -4,20 +4,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.TreeMap;
+import java.util.*;
 
 public class HistoryController {
     public Button StatisticsButton;
@@ -34,13 +33,12 @@ public class HistoryController {
     private TableColumn<Transaction, Void> deleteColumn;
     @FXML
     private LineChart<String, Number> balanceTrendChart;
-    @FXML
-    public Label dateTime;
+
 
     public void initialize() {
         setupTransactionTable();
         setupBalanceTrendChart();
-        DateTimeUpdater.start(dateTime);
+
 
         addDeleteButtonToTable();
 
@@ -116,6 +114,7 @@ public class HistoryController {
 
     private void refreshTransactionTable() {
         List<Transaction> allTransactions = SQLiteDatabase.getAllTransactions();
+        allTransactions.sort(Comparator.comparing(Transaction::getDate)); // Sort by date descending
         ObservableList<Transaction> observableTransactions = FXCollections.observableArrayList(allTransactions);
         allTransactionsTable.setItems(observableTransactions);
     }
@@ -125,12 +124,13 @@ public class HistoryController {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Balance Over Time");
 
-        List<Transaction> transactions = SQLiteDatabase.getAllTransactions();
+        List<Transaction> allTransactions = SQLiteDatabase.getAllTransactions();
+        allTransactions.sort(Comparator.comparing(Transaction::getDate)); // Sort by date descending
         double runningBalance = 0;
 
 
-        for (int i = 0; i < transactions.size(); i++) {
-            Transaction t = transactions.get(i);
+        for (int i = 0; i < allTransactions.size(); i++) {
+            Transaction t = allTransactions.get(i);
             runningBalance += t.getAmount();
             String label = t.getDate() + " #" + (i + 1);
             series.getData().add(new XYChart.Data<>(label, runningBalance));
@@ -169,19 +169,30 @@ public class HistoryController {
     private void addDeleteButtonToTable() {
         deleteColumn.setCellFactory(col -> new TableCell<>() {
             private final Button deleteButton = new Button("X");
+            private final HBox centeredBox = new HBox(deleteButton);
 
             {
-                deleteButton.setStyle("-fx-background-color: #ff3333; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 5; -fx-background-radius: 3;");
+                // Button styling
+                deleteButton.setStyle(
+                        "-fx-background-color: #ff3333; " +
+                                "-fx-text-fill: white; " +
+                                "-fx-font-weight: bold; " +
+                                "-fx-padding: 5; " +
+                                "-fx-background-radius: 3;"
+                );
+
+                // Center the HBox
+                centeredBox.setAlignment(Pos.CENTER);
+
+                // Action handler
                 deleteButton.setOnAction(event -> {
                     Transaction transaction = getTableView().getItems().get(getIndex());
                     int transactionId = transaction.getId();
-
 
                     Alert confirmDialog = new Alert(Alert.AlertType.CONFIRMATION);
                     confirmDialog.setTitle("Delete Transaction");
                     confirmDialog.setHeaderText("Delete Transaction");
                     confirmDialog.setContentText("Are you sure you want to delete this transaction?");
-
 
                     DialogPane dialogPane = confirmDialog.getDialogPane();
                     dialogPane.getStylesheets().add(getClass().getResource("/com/styles.css").toExternalForm());
@@ -199,7 +210,6 @@ public class HistoryController {
                             successNotification.setContentText("Transaction deleted successfully!");
                             successNotification.showAndWait();
                         } else {
-                            // Show error notification
                             Alert errorNotification = new Alert(Alert.AlertType.ERROR);
                             errorNotification.setTitle("Error");
                             errorNotification.setHeaderText(null);
@@ -216,9 +226,10 @@ public class HistoryController {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    setGraphic(deleteButton);
+                    setGraphic(centeredBox);
                 }
             }
         });
     }
+
 }

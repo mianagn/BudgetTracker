@@ -12,6 +12,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -33,6 +34,9 @@ public class HomeController {
     @FXML public Pane midContainer;
     @FXML public Label balance;
     @FXML public Label balanceText;
+    public Button incomeButton;
+    public Button expenseButton;
+    public BorderPane homeContainer;
 
     @FXML private TableView<Transaction> recentTable;
     @FXML private TableColumn<Transaction, String> descriptionCol;
